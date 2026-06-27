@@ -1,0 +1,397 @@
+/* fonts */
+
+/* ===== Базовые переменные (все размеры адаптивные) ===== */
+:root {
+    /* Очень маленькие */
+    --fs-10: clamp(0.375rem, 0.8vw, 0.5rem);
+    /* ~6-8px */
+    --fs-9: clamp(0.4375rem, 1vw, 0.5625rem);
+    /* ~7-9px */
+    --fs-8: clamp(0.5rem, 1.2vw, 0.625rem);
+    /* ~8-10px */
+    --fs-7: clamp(0.625rem, 1.5vw, 0.75rem);
+    /* ~10-12px */
+
+    /* Существующие (переименованы) */
+    --fs-6: clamp(0.75rem, 2vw, 0.875rem);
+    /* ~12-14px */
+    --fs-5: clamp(0.875rem, 2.5vw, 1rem);
+    /* ~14-16px */
+    --fs-4: clamp(1rem, 3vw, 1.125rem);
+    /* ~16-18px */
+    --fs-3: clamp(1.125rem, 3.5vw, 1.25rem);
+    /* ~18-20px */
+    --fs-2: clamp(1.25rem, 4vw, 1.5rem);
+    /* ~20-24px */
+    --fs-1: clamp(1.5rem, 5vw, 2rem);
+    /* ~24-32px */
+}
+
+/* ===== Универсальные классы шрифтов ===== */
+.fs-1 {
+    font-size: var(--fs-1) !important;
+}
+
+.fs-2 {
+    font-size: var(--fs-2) !important;
+}
+
+.fs-3 {
+    font-size: var(--fs-3) !important;
+}
+
+.fs-4 {
+    font-size: var(--fs-4) !important;
+}
+
+.fs-5 {
+    font-size: var(--fs-5) !important;
+}
+
+.fs-6 {
+    font-size: var(--fs-6) !important;
+}
+
+.fs-7 {
+    font-size: var(--fs-7) !important;
+}
+
+.fs-8 {
+    font-size: var(--fs-8) !important;
+}
+
+.fs-9 {
+    font-size: var(--fs-9) !important;
+}
+
+.fs-10 {
+    font-size: var(--fs-10) !important;
+}
+
+/* ===== Жирность шрифтов ===== */
+.fw-100 {
+    font-weight: 100 !important;
+}
+
+/* Thin */
+.fw-200 {
+    font-weight: 200 !important;
+}
+
+/* Extra Light */
+.fw-300 {
+    font-weight: 300 !important;
+}
+
+/* Light */
+.fw-400 {
+    font-weight: 400 !important;
+}
+
+/* Normal / Regular */
+.fw-500 {
+    font-weight: 500 !important;
+}
+
+/* Medium */
+.fw-600 {
+    font-weight: 600 !important;
+}
+
+/* Semi Bold */
+.fw-700 {
+    font-weight: 700 !important;
+}
+
+/* Bold */
+.fw-800 {
+    font-weight: 800 !important;
+}
+
+/* Extra Bold */
+.fw-900 {
+    font-weight: 900 !important;
+}
+
+/* Black / Heavy */
+
+/* Алиасы для удобства */
+.fw-light {
+    font-weight: 300 !important;
+}
+
+.fw-regular {
+    font-weight: 400 !important;
+}
+
+.fw-medium {
+    font-weight: 500 !important;
+}
+
+.fw-semibold {
+    font-weight: 600 !important;
+}
+
+.fw-bold {
+    font-weight: 700 !important;
+}
+
+.fw-extrabold {
+    font-weight: 800 !important;
+}
+
+.fw-black {
+    font-weight: 900 !important;
+}
+
+/* ===== Медиа-запросы для тонкой настройки ===== */
+
+/* Планшеты (до 768px) */
+@media (max-width: 768px) {
+    .fs-1 {
+        font-size: clamp(1.25rem, 6vw, 1.75rem) !important;
+    }
+
+    .fs-2 {
+        font-size: clamp(1rem, 5vw, 1.5rem) !important;
+    }
+
+    .fs-3 {
+        font-size: clamp(0.875rem, 4.5vw, 1.25rem) !important;
+    }
+
+    .fs-4 {
+        font-size: clamp(0.875rem, 4vw, 1.125rem) !important;
+    }
+
+    .fs-5 {
+        font-size: clamp(0.75rem, 3.5vw, 1rem) !important;
+    }
+
+    .fs-6 {
+        font-size: clamp(0.75rem, 3vw, 0.875rem) !important;
+    }
+
+    .fs-7 {
+        font-size: clamp(0.625rem, 2.5vw, 0.75rem) !important;
+    }
+
+    .fs-8 {
+        font-size: clamp(0.5rem, 2vw, 0.625rem) !important;
+    }
+
+    .fs-9 {
+        font-size: clamp(0.4375rem, 1.5vw, 0.5rem) !important;
+    }
+
+    .fs-10 {
+        font-size: clamp(0.375rem, 1.2vw, 0.4375rem) !important;
+    }
+}
+
+/* Мобильные (до 480px) */
+@media (max-width: 480px) {
+    .fs-1 {
+        font-size: clamp(1rem, 5vw, 1.5rem) !important;
+    }
+
+    .fs-2 {
+        font-size: clamp(0.875rem, 4.5vw, 1.25rem) !important;
+    }
+
+    .fs-3 {
+        font-size: clamp(0.75rem, 4vw, 1.125rem) !important;
+    }
+
+    .fs-4 {
+        font-size: clamp(0.75rem, 3.5vw, 1rem) !important;
+    }
+
+    .fs-5 {
+        font-size: clamp(0.625rem, 3vw, 0.875rem) !important;
+    }
+
+    .fs-6 {
+        font-size: clamp(0.625rem, 2.5vw, 0.75rem) !important;
+    }
+
+    .fs-7 {
+        font-size: clamp(0.5rem, 2vw, 0.625rem) !important;
+    }
+
+    .fs-8 {
+        font-size: clamp(0.4375rem, 1.5vw, 0.5rem) !important;
+    }
+
+    .fs-9 {
+        font-size: clamp(0.375rem, 1.2vw, 0.4375rem) !important;
+    }
+
+    .fs-10 {
+        font-size: clamp(0.3125rem, 1vw, 0.375rem) !important;
+    }
+}
+
+/* Средние экраны (769-1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .fs-1 {
+        font-size: clamp(1.5rem, 4.5vw, 1.75rem) !important;
+    }
+
+    .fs-2 {
+        font-size: clamp(1.25rem, 4vw, 1.5rem) !important;
+    }
+
+    .fs-3 {
+        font-size: clamp(1.125rem, 3.5vw, 1.25rem) !important;
+    }
+
+    .fs-4 {
+        font-size: clamp(1rem, 3vw, 1.125rem) !important;
+    }
+
+    .fs-5 {
+        font-size: clamp(0.875rem, 2.5vw, 1rem) !important;
+    }
+
+    .fs-6 {
+        font-size: clamp(0.75rem, 2vw, 0.875rem) !important;
+    }
+
+    .fs-7 {
+        font-size: clamp(0.625rem, 1.8vw, 0.75rem) !important;
+    }
+
+    .fs-8 {
+        font-size: clamp(0.5rem, 1.5vw, 0.625rem) !important;
+    }
+
+    .fs-9 {
+        font-size: clamp(0.4375rem, 1.2vw, 0.5rem) !important;
+    }
+
+    .fs-10 {
+        font-size: clamp(0.375rem, 1vw, 0.4375rem) !important;
+    }
+}
+
+/* Крупные экраны (от 1440px) */
+@media (min-width: 1440px) {
+    .fs-1 {
+        font-size: 2rem !important;
+    }
+
+    .fs-2 {
+        font-size: 1.75rem !important;
+    }
+
+    .fs-3 {
+        font-size: 1.5rem !important;
+    }
+
+    .fs-4 {
+        font-size: 1.25rem !important;
+    }
+
+    .fs-5 {
+        font-size: 1.125rem !important;
+    }
+
+    .fs-6 {
+        font-size: 1rem !important;
+    }
+
+    .fs-7 {
+        font-size: 0.875rem !important;
+    }
+
+    .fs-8 {
+        font-size: 0.75rem !important;
+    }
+
+    .fs-9 {
+        font-size: 0.625rem !important;
+    }
+
+    .fs-10 {
+        font-size: 0.5rem !important;
+    }
+}
+
+/* ===== Общие стили для заголовков ===== */
+h1,
+.h1 {
+    font-size: var(--fs-1) !important;
+}
+
+h2,
+.h2 {
+    font-size: var(--fs-2) !important;
+}
+
+h3,
+.h3 {
+    font-size: var(--fs-3) !important;
+}
+
+h4,
+.h4 {
+    font-size: var(--fs-4) !important;
+}
+
+h5,
+.h5 {
+    font-size: var(--fs-5) !important;
+}
+
+h6,
+.h6 {
+    font-size: var(--fs-6) !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+    margin-bottom: 0;
+    font-weight: 500;
+    line-height: 1.2;
+}
+
+h1,
+.h1 {
+    font-weight: 700;
+}
+
+h2,
+.h2 {
+    font-weight: 600;
+}
+
+h3,
+.h3 {
+    font-weight: 600;
+}
+
+h4,
+.h4 {
+    font-weight: 500;
+}
+
+h5,
+.h5 {
+    font-weight: 500;
+}
+
+h6,
+.h6 {
+    font-weight: 500;
+}
