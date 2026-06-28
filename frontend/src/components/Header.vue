@@ -1,8 +1,8 @@
 <script setup>
 import { ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import CarCard from '@/components/CarCard.vue';
 import { useFavoritesStore } from '@/stores/favorites';
+import CarCard from '@/components/CarCard.vue';
 
 const route = useRoute();
 const router = useRouter();
@@ -14,17 +14,12 @@ const favoritesStore = useFavoritesStore();
 
 const toggleModal = (modalName) => {
     if (modalName === 'favorite') {
-        // УБРАНО: favoritesStore.loadFavorites(), так как данные теперь
-        // автоматически загружаются из localStorage при инициализации стора
         modalFavorite.value = !modalFavorite.value;
     } else if (modalName === 'chat') {
         modalChat.value = !modalChat.value;
     }
 }
 
-const refreshFavorites = () => {
-    favoritesStore.refresh();
-}
 </script>
 
 <template>
@@ -32,21 +27,20 @@ const refreshFavorites = () => {
         <div class="modalBackground" v-if="modalFavorite" @click="toggleModal('favorite')">
             <div class="modalUn shadow col-12 col-md-6 col-lg-5" @click.stop>
                 <div class="modalHeader p-2 ps-3 pe-3 d-flex justify-content-between align-items-center">
-                    <h3 class="fw-800 fs-2">Избранное</h3>
-                    <div><i class="bi bi-x-square fs-1 fw-800" role="button" @click="toggleModal('favorite')"></i>
+                    <h3 class="fw-700 fs-2">Избранное</h3>
+                    <div><i class="bi bi-x-square fs-1 fw-600" role="button" @click="toggleModal('favorite')"></i>
                     </div>
                 </div>
                 <div class="modalBody p-3">
                     <div class="row row-cols-1 g-3">
-                        <!-- ИСПРАВЛЕНО: убрали .state.cars -> стало favoritesStore.cars -->
                         <div class="col" v-for="car in favoritesStore.cars" :key="car._id">
                             <CarCard :car-data="car"></CarCard>
                         </div>
                     </div>
-                    <!-- ИСПРАВЛЕНО: убрали .state.cars -> стало favoritesStore.cars -->
-                    <div v-if="favoritesStore.cars.length === 0" class="text-center py-5 mt-5">
-                        <i class="bi bi-heart text-secondary big-text"></i>
-                        <p class="text-secondary">Нет избранных автомобилей</p>
+                    <div v-if="favoritesStore.cars.length === 0"
+                        class="text-center d-flex align-items-center justify-content-center flex-column h-100">
+                        <i class="bi bi-heart cl-bl big-text"></i>
+                        <p class="cl-bl">Нет избранных автомобилей</p>
                     </div>
                 </div>
             </div>
@@ -82,6 +76,18 @@ const refreshFavorites = () => {
     cursor: pointer;
 }
 
+.link:hover {
+    transition: all 0.4s;
+    background-color: rgb(240, 240, 240);
+    color: black;
+}
+
+.link:hover i {
+    transition: all 0.4s;
+    color: black;
+}
+
+
 .link:active {
     background-color: rgb(220, 220, 220);
     color: black;
@@ -116,7 +122,7 @@ const refreshFavorites = () => {
     top: 0;
     width: 100vw;
     height: 100vh;
-    z-index: 100000;
+    z-index: 9999;
 }
 
 .modalUn {
@@ -127,6 +133,7 @@ const refreshFavorites = () => {
     background-color: white;
     display: flex;
     flex-direction: column;
+    z-index: 10000 !important;
 }
 
 .modalHeader {

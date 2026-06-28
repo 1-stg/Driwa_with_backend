@@ -2,14 +2,32 @@
 import { ref, computed } from 'vue';
 import { useAuthStore } from '@/stores/auth';
 import { useRouter } from 'vue-router';
+import CarCard from '@/components/CarCard.vue';
+import api from '@/api/axios';
 
 const authStore = useAuthStore();
 const router = useRouter();
+const userCars = ref([]);
+
+const getUserCars = async () => {
+    try {
+        const user = authStore.user;
+        let id = user._id;
+        console.log(id);
+
+        let response = await api.get('/user-cars', { params: { id } });
+        userCars.value = response.data;
+        console.log(userCars.value);
+    } catch (e) {
+        console.error('Ошибка: ' + e);
+    }
+};
+
+getUserCars();
 
 const error = ref('');
 const isLoading = ref(false);
 
-// Безопасное получение email текущего пользователя
 const userEmail = computed(() => authStore.user?.email || 'Гость');
 
 const onLogout = async () => {
@@ -17,7 +35,7 @@ const onLogout = async () => {
         error.value = '';
         isLoading.value = true;
 
-        await authStore.logout(); // Нам не нужно передавать email и password при выходе
+        await authStore.logout();
 
         router.push({ name: 'main' });
     } catch (err) {
@@ -30,61 +48,73 @@ const onLogout = async () => {
 
 <template>
     <div class="user-page mt-4">
-        <!-- Карточка профиля, полностью повторяющая стиль формы авторизации -->
-        <div class="profile-card col-12 col-md-6 p-4 shadow rounded-4 bg-white">
-            <div class="row row-cols-1 g-4 text-center">
-                <div class="col d-flex flex-column align-items-center justify-content-center">
-                    <div class="avatar-placeholder mb-2">
-                        🚗
-                    </div>
-                    <h2 class="fs-1">Личный кабинет</h2>
-                    <p class="text-secondary small fs-5">Добро пожаловать в клуб DRIWA</p>
-                </div>
+        <div class="row g-4 mb-4">
+            <div class="col-12 col-md-6">
+                <div class="profile-card p-4 shadow rounded-4 bg-white h-100">
+                    <div class="row row-cols-1 g-4 text-center">
+                        <div class="col d-flex flex-column align-items-center justify-content-center">
+                            <div class="avatar-placeholder mb-2">🚗</div>
+                            <h2 class="fs-1">Личный кабинет</h2>
+                            <p class="text-secondary small fs-5">Добро пожаловать в клуб DRIWA</p>
+                        </div>
 
-                <!-- Блок с данными пользователя -->
-                <div class="col text-start">
-                    <div class="info-box w-100">
-                        <span class="info-label fs-8">Ваш Email</span>
-                        <div class="info-value fs-6">{{ userEmail }}</div>
-                    </div>
-                </div>
+                        <div class="col text-start">
+                            <div class="info-box w-100">
+                                <span class="info-label fs-8">Ваш Email</span>
+                                <div class="info-value fs-6">{{ userEmail }}</div>
+                            </div>
+                        </div>
 
-                <div class="col text-start">
-                    <div class="info-box w-100">
-                        <span class="info-label fs-8">Статус аккаунта</span>
-                        <div class="info-value d-flex align-items-center fs-6">
-                            <span class="status-badge-active me-2"></span> Активен
+                        <div class="col text-start">
+                            <div class="info-box w-100">
+                                <span class="info-label fs-8">Статус аккаунта</span>
+                                <div class="info-value d-flex align-items-center fs-6">
+                                    <span class="status-badge-active me-2"></span> Активен
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col" v-if="error">
+                            <p class="error-msg text-danger small m-0">{{ error }}</p>
+                        </div>
+
+                        <div class="col">
+                            <button @click="onLogout" class="w-100 btn btn-dark fs-6" :disabled="isLoading">
+                                {{ isLoading ? 'Выход из системы...' : 'Выйти из аккаунта' }}
+                            </button>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <!-- Вывод ошибок, если они возникнут при выходе -->
-                <div class="col" v-if="error">
-                    <p class="error-msg text-danger small m-0">{{ error }}</p>
+            <div class="col-12 col-md-6">
+                <div
+                    class="add-car p-4 shadow rounded-4 bg-white h-100 d-flex align-items-center justify-content-center">
+                    <div class="link w-100 h-100 rounded-4 d-flex align-items-center justify-content-center flex-column">
+                        <i class="bi bi-file-plus cl-bl big-text"></i>
+                        <span class="fs-2 fw-bold cl-bl">Создать объявление</span>
+                    </div>
                 </div>
-
-                <!-- Кнопка выхода в твоем фирменном стиле btn-dark -->
-                <div class="col">
-                    <button @click="onLogout" class="w-100 btn btn-dark fs-6" :disabled="isLoading">
-                        {{ isLoading ? 'Выход из системы...' : 'Выйти из аккаунта' }}
-                    </button>
-                </div>
-
             </div>
         </div>
-        <div class="col-12 col-md-6 p-4"></div>
-        <div class=""></div>
+
+        <div class="cars-section mt-5" v-if="userCars && userCars.length">
+            <h3 class="mb-4 fs-3 fw-bold">Мои автомобили</h3>
+            <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-3">
+                <div class="col" v-for="car in userCars" :key="car._id">
+                    <CarCard :car-data="car"></CarCard>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
+
 <style scoped>
-/* Выравнивание карточки по центру, точно как на auth-page */
 .user-page {
     min-height: 88dvh;
-    /* Легкий серый фон для контраста с белой карточкой */
 }
 
-/* Имитация инпутов для красивого отображения данных */
 .info-box {
     padding: 12px 18px;
     border-radius: 15px;
@@ -107,7 +137,6 @@ const onLogout = async () => {
     font-size: 16px;
 }
 
-/* Круглая иконка профиля */
 .avatar-placeholder {
     width: 70px;
     height: 70px;
@@ -120,7 +149,6 @@ const onLogout = async () => {
     box-shadow: 0 0 10px 0.2px rgba(0, 0, 0, 0.05);
 }
 
-/* Зеленый индикатор статуса */
 .status-badge-active {
     width: 10px;
     height: 10px;
@@ -129,7 +157,6 @@ const onLogout = async () => {
     display: inline-block;
 }
 
-/* Кнопка скругления из твоего глобального стиля */
 .btn {
     border-radius: 15px;
     padding: 12px;

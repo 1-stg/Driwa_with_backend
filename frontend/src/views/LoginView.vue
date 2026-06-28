@@ -15,8 +15,7 @@ const onLogin = async () => {
     try {
         error.value = true;
         isLoading.value = true;
-
-        // await authStore.register(email.value, password.value);
+        
         await authStore.login(email.value, password.value);
 
         router.push({ name: 'user-profile' });

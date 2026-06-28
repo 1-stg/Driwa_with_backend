@@ -22,3 +22,13 @@ exports.getCarDetails = async (req, res) => {
         res.sendStatus(400);
     }
 };
+
+exports.getUserCars = async (req, res) => {
+    try {
+        const { id } = req.query;
+        let userCars = await Car.find({ 'userId': id });
+        res.send(userCars);
+    } catch {
+        res.sendStatus(400);
+    }
+}

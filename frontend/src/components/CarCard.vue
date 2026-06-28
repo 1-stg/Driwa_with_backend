@@ -1,16 +1,15 @@
 <script setup>
 import { computed } from 'vue';
-import { useFavoritesStore } from '@/stores/favorites'; // Импорт стора
+import { useFavoritesStore } from '@/stores/favorites';
 
 const props = defineProps({
     carData: Object,
 });
 
-const favoritesStore = useFavoritesStore(); // Инициализация
+const favoritesStore = useFavoritesStore();
 
 let engineData = props.carData.engine.split(', ');
 
-// Используем геттер-функцию из Pinia
 const isCarInFavorite = computed(() => {
     return favoritesStore.isCarInFavorite(props.carData._id);
 });

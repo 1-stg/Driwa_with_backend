@@ -3,9 +3,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const config = require('../config');
 
-// Функция для генерации пары токенов
 const generateTokens = (payload) => {
-    // Проверяем наличие секретов в конфиге
     const accessSecret = config.jwtAccessSecret || 'fallback_access_secret';
     const refreshSecret = config.jwtRefreshSecret || 'fallback_refresh_secret';
 
@@ -14,7 +12,6 @@ const generateTokens = (payload) => {
     return { accessToken, refreshToken };
 };
 
-// 1. РЕГИСТРАЦИЯ
 exports.register = async (req, res) => {
     try {
         const { email, password } = req.body;
@@ -40,7 +37,6 @@ exports.register = async (req, res) => {
     }
 };
 
-// 2. ВХОД (ЛОГИН)
 exports.login = async (req, res) => {
     try {
         const { email, password } = req.body;
@@ -87,14 +83,12 @@ exports.login = async (req, res) => {
         res.json({ accessToken, user });
 
     } catch (err) {
-        // Если сервер всё равно выдаст 500 — этот лог в терминале бэкенда покажет точную строчку падения!
         console.error('--- КРИТИЧЕСКАЯ ОШИБКА В КОНТРОЛЛЕРЕ ЛОГИНА ---');
         console.error(err);
         res.status(500).json({ error: 'Внутренняя ошибка сервера при авторизации', details: err.message });
     }
 };
 
-// 3. ОБНОВЛЕНИЕ ТОКЕНА (REFRESH)
 exports.refresh = async (req, res) => {
     try {
         const { refreshToken } = req.cookies;
@@ -129,7 +123,6 @@ exports.refresh = async (req, res) => {
     }
 };
 
-// 4. ВЫХОД (ЛОГАУТ)
 exports.logout = async (req, res) => {
     try {
         res.clearCookie('refreshToken');

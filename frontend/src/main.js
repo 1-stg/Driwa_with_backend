@@ -1,6 +1,5 @@
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
-import { provideFavorites } from './composables/favorite.js'
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 import router from './router.js';
 import App from './App.vue';
@@ -22,8 +21,6 @@ app.use(pinia)
 app.use(router);
 app.use(createBootstrap());
 app.provide('$axios', api);
-const favoritesStore = provideFavorites()
-app.provide('favoritesStore', favoritesStore)
 
 Object.entries(Components).forEach(([name, component]) => {
     if (name.startsWith('B') && component) {

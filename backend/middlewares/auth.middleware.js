@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const config = require('../config');
 
-module.exports = function (req, res, next) { // Экспорт напрямую как функции!
+module.exports = function (req, res, next) {
     try {
         const authHeader = req.headers.authorization;
         if (!authHeader) return res.status(401).json({ message: 'Не авторизован' });
