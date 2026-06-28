@@ -18,6 +18,10 @@ const goToTop = () => {
     });
 }
 
+const getIconUrl = (name) => {
+    return new URL(`/src/assets/svg/${name}`, import.meta.url).href;
+};
+
 const switchPhoto = (index) => {
     currentPhotoIndex.value = index;
 }
@@ -89,10 +93,70 @@ watch(
                 </div>
             </div>
 
-            <div class="col-12 col-lg-4">
-                <div class="p-3 bg-white rounded-4 shadow h-100">
-                    <h5>Характеристики</h5>
-                    <p>ID: {{ car._id }}</p>
+            <div class="col-12 col-lg-4 cl-bl">
+                <div class="p-4 bg-white rounded-4 shadow h-100">
+                    <div class="mb-4">
+                        <h1 class="fs-3 fw-bold mb-1 cl-bl">{{ car.title }}</h1>
+                        <div class="text-secondary small mb-1">Год выпуска: {{ car.year }}</div>
+                        <div class="fs-2 fw-bold cl-bl">
+                            {{ car.price ? car.price.toLocaleString('ru-RU') + ' ₽' : 'Цена не указана' }}
+                        </div>
+                    </div>
+
+                    <div class="d-flex flex-column gap-3">
+                        <div class="row align-items-center g-2 pb-2 border-bottom">
+                            <div class="col-2 text-center">
+                                <img class="car-options-svg" :src="'http://localhost:3005/svg/engine.svg'"
+                                    alt="Двигатель">
+                            </div>
+                            <div class="col-10">
+                                <div class="text-secondary fs-7 lh-sm">Двигатель</div>
+                                <div class="fs-6 fw-semibold cl-bl lh-sm">{{ car.engine }}</div>
+                            </div>
+                        </div>
+                        <div class="row align-items-center g-2 pb-2 border-bottom">
+                            <div class="col-2 text-center">
+                                <img class="car-options-svg" :src="'http://localhost:3005/svg/gearbox.svg'" alt="КПП">
+                            </div>
+                            <div class="col-10">
+                                <div class="text-secondary fs-7 lh-sm">Коробка передач</div>
+                                <div class="fs-6 fw-semibold cl-bl lh-sm">{{ car.gearbox }}</div>
+                            </div>
+                        </div>
+                        <div class="row align-items-center g-2 pb-2 border-bottom">
+                            <div class="col-2 text-center">
+                                <img class="car-options-svg" :src="'http://localhost:3005/svg/drive_shaft.svg'"
+                                    alt="Привод">
+                            </div>
+                            <div class="col-10">
+                                <div class="text-secondary fs-7 lh-sm">Привод</div>
+                                <div class="fs-6 fw-semibold cl-bl lh-sm">{{ car.driveShaft }} привод</div>
+                            </div>
+                        </div>
+                        <div class="row align-items-center g-2 pb-2 border-bottom">
+                            <div class="col-2 text-center">
+                                <img class="car-options-svg" :src="'http://localhost:3005/svg/mileage.svg'"
+                                    alt="Пробег">
+                            </div>
+                            <div class="col-10">
+                                <div class="text-secondary fs-7 lh-sm">Пробег</div>
+                                <div class="fs-6 fw-semibold cl-bl lh-sm">
+                                    {{ car.mileage ? car.mileage.toLocaleString('ru-RU') + ' км' : '0 км' }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row align-items-center g-2 pb-2">
+                            <div class="col-2 text-center">
+                                <img class="car-options-svg" :src="'http://localhost:3005/svg/profile.svg'"
+                                    alt="Владельцы">
+                            </div>
+                            <div class="col-10">
+                                <div class="text-secondary fs-7 lh-sm">Владельцы</div>
+                                <div class="fs-6 fw-semibold cl-bl lh-sm">{{ car.ownersCount }} по ПТС</div>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
             </div>
         </div>
@@ -110,8 +174,15 @@ watch(
 </template>
 
 <style scoped>
+.car-options-svg {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    opacity: 0.8;
+}
+
 .main-img {
-    height: 450px;
+    height: 350px;
     object-fit: cover;
     transition: opacity 0.2s ease-in-out;
 }
