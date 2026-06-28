@@ -1,51 +1,25 @@
 <script setup>
-import { ref, inject, onMounted, watch } from 'vue';
-const api = inject('$axios');
+import { inject, computed } from 'vue';
 
 const props = defineProps({
     carData: Object,
 })
 
+const favoritesStore = inject('favoritesStore');
+
 let engineData = props.carData.engine.split(', ');
-const isCarInFavorite = ref(false);
+const isCarInFavorite = computed(() => {
+    return favoritesStore.isFavorite(props.carData._id);
+});
 
 const formatData = (data) => {
     let formatedPrice = data.toLocaleString('fr-FR');
     return formatedPrice;
 }
 
-const getFavoriteCars = () => {
-    const data = localStorage.getItem('favoriteCars');
-    return data ? JSON.parse(data) : [];
-}
-
-const checkIfInFavorite = () => {
-    const favorites = getFavoriteCars();
-    isCarInFavorite.value = favorites.some(car => car._id === props.carData._id);
-}
-
 const toggleFavorite = (car) => {
-    let oldData = getFavoriteCars();
-    const index = oldData.findIndex(c => c._id === car._id);
-
-    if (index !== -1) {
-        oldData.splice(index, 1);
-    } else {
-        oldData.push(car);
-    }
-
-    localStorage.setItem('favoriteCars', JSON.stringify(oldData));
-    isCarInFavorite.value = index === -1;
+    favoritesStore.toggleFavorite(car);
 }
-
-onMounted(() => {
-    checkIfInFavorite();
-});
-
-watch(() => props.carData, () => {
-    checkIfInFavorite();
-}, { immediate: true });
-
 </script>
 
 <template>

@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container" :class="{ 'overflow-hidden': modalFavorite }">
     <Header></Header>
     <main>
       <router-view />
@@ -17,6 +17,10 @@ import Footer from './components/Footer.vue';
 <style>
 html {
   scrollbar-gutter: stable;
+}
+
+.cl-bl {
+  color: black !important;
 }
 
 :root {
