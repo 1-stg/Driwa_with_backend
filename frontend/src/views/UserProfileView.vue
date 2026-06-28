@@ -98,7 +98,7 @@ const onLogout = async () => {
             </div>
         </div>
 
-        <div class="cars-section mt-5" v-if="userCars && userCars.length">
+        <div class="cars-section mt-4" v-if="userCars && userCars.length">
             <h3 class="mb-4 fs-3 fw-bold">Мои автомобили</h3>
             <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-3">
                 <div class="col" v-for="car in userCars" :key="car._id">

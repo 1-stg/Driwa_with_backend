@@ -1,6 +1,9 @@
 <script setup>
 import { computed } from 'vue';
 import { useFavoritesStore } from '@/stores/favorites';
+import { useRoute, useRouter } from 'vue-router';
+
+const router = useRouter();
 
 const props = defineProps({
     carData: Object,
@@ -51,7 +54,8 @@ const toggleFavorite = (car) => {
             </BCardText>
             <div class="row g-1 h-100">
                 <div class="col-10">
-                    <BButton class="h-100 w-100 rounded-start-4 rounded-end-0" variant="dark">Подробнее</BButton>
+                    <BButton class="h-100 w-100 rounded-start-4 rounded-end-0" variant="dark"
+                        @click="router.push('/car-details/' + carData._id)">Подробнее</BButton>
                 </div>
                 <div class="col-2">
                     <BButton @click="toggleFavorite(carData)"

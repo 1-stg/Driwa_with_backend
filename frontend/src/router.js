@@ -10,6 +10,12 @@ const router = createRouter({
             component: () => import('./views/MainView.vue'),
         },
         {
+            path: '/car-details/:id',
+            name: 'car-details',
+            component: () => import('./views/CarDetails.vue'),
+            props: true,
+        },
+        {
             path: '/user-profile',
             name: 'user-profile',
             component: () => import('./views/UserProfileView.vue'),

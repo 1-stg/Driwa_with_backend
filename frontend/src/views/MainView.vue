@@ -1,19 +1,9 @@
 <script setup>
 import CarCard from '@/components/CarCard.vue';
 import { ref, inject, onMounted } from 'vue';
-
-const cars = ref([]);
+import { useCars } from '@/composables/useCars';
+const { cars, isLoading, getAllCars } = useCars();
 const api = inject('$axios');
-
-
-const getAllCars = async () => {
-    try {
-        let response = await api.get('/getallcars');
-        cars.value = response.data;
-    } catch {
-        console.log('ошибка');
-    }
-}
 
 onMounted(() => {
     getAllCars();

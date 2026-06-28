@@ -11,8 +11,11 @@ exports.getAllCars = async (req, res) => {
 
 exports.getCarDetails = async (req, res) => {
     try {
-        const { id } = req.query;
-        const car = await Car.findOne({ _id: id });
+        const { carId } = req.query;
+
+        const car = await Car.findOne({ _id: carId });
+        console.log(car);
+        
 
         if (!car) {
             return res.status(404).json({ message: 'Машина не найдена' });
