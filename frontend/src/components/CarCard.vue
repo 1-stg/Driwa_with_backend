@@ -1,26 +1,29 @@
 <script setup>
-import { inject, computed } from 'vue';
+import { computed } from 'vue';
+import { useFavoritesStore } from '@/stores/favorites'; // Импорт стора
 
 const props = defineProps({
     carData: Object,
-})
+});
 
-const favoritesStore = inject('favoritesStore');
+const favoritesStore = useFavoritesStore(); // Инициализация
 
 let engineData = props.carData.engine.split(', ');
+
+// Используем геттер-функцию из Pinia
 const isCarInFavorite = computed(() => {
-    return favoritesStore.isFavorite(props.carData._id);
+    return favoritesStore.isCarInFavorite(props.carData._id);
 });
 
 const formatData = (data) => {
-    let formatedPrice = data.toLocaleString('fr-FR');
-    return formatedPrice;
+    return data.toLocaleString('fr-fr');
 }
 
 const toggleFavorite = (car) => {
     favoritesStore.toggleFavorite(car);
 }
 </script>
+
 
 <template>
     <BCard class="rounded-4 overflow-hidden shadow h-100 p-0" img-alt="Image" img-top tag="article">

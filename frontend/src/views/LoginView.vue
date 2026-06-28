@@ -40,7 +40,7 @@ const onLogin = async () => {
                 <div class="col"><input class="w-100 " v-model="password" type="password" placeholder="Пароль"
                         required /></div>
                 <div class="col">
-                    <p v-if="error" class="error-msg">{{ error }}</p>
+                    <p v-if="error && error !== true" class="error-msg">{{ error }}</p>
                 </div>
                 <div class="col"><button type="submit" class="w-100 btn btn-dark mb-1" :disabled="isLoading">
                         {{ isLoading ? 'Аутентификация...' : 'Войти' }}

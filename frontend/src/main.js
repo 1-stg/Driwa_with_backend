@@ -1,6 +1,7 @@
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
 import { provideFavorites } from './composables/favorite.js'
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 import router from './router.js';
 import App from './App.vue';
 import api from './api/axios';
@@ -15,6 +16,7 @@ import * as Components from 'bootstrap-vue-next';
 
 const app = createApp(App);
 const pinia = createPinia();
+pinia.use(piniaPluginPersistedstate)
 
 app.use(pinia)
 app.use(router);

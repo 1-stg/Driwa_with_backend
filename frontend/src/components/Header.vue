@@ -1,22 +1,24 @@
 <script setup>
-import { ref, inject, onMounted } from 'vue';
+import { ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import CarCard from '@/components/CarCard.vue';
+import { useFavoritesStore } from '@/stores/favorites';
 
 const route = useRoute();
 const router = useRouter();
-const modalFavorite = ref(false);
-const ModalChat = ref(false);
 
-// Инжектим store избранного
-const favoritesStore = inject('favoritesStore');
+const modalFavorite = ref(false);
+const modalChat = ref(false);
+
+const favoritesStore = useFavoritesStore();
 
 const toggleModal = (modalName) => {
     if (modalName === 'favorite') {
-        favoritesStore.loadFavorites();
+        // УБРАНО: favoritesStore.loadFavorites(), так как данные теперь
+        // автоматически загружаются из localStorage при инициализации стора
         modalFavorite.value = !modalFavorite.value;
     } else if (modalName === 'chat') {
-        ModalChat.value = !ModalChat.value;
+        modalChat.value = !modalChat.value;
     }
 }
 
@@ -36,11 +38,13 @@ const refreshFavorites = () => {
                 </div>
                 <div class="modalBody p-3">
                     <div class="row row-cols-1 g-3">
-                        <div class="col" v-for="(car, index) in favoritesStore.state.cars" :key="car._id">
-                            <CarCard :car-data="car" @favorite-changed="refreshFavorites"></CarCard>
+                        <!-- ИСПРАВЛЕНО: убрали .state.cars -> стало favoritesStore.cars -->
+                        <div class="col" v-for="car in favoritesStore.cars" :key="car._id">
+                            <CarCard :car-data="car"></CarCard>
                         </div>
                     </div>
-                    <div v-if="favoritesStore.state.cars.length === 0" class="text-center py-5 mt-5">
+                    <!-- ИСПРАВЛЕНО: убрали .state.cars -> стало favoritesStore.cars -->
+                    <div v-if="favoritesStore.cars.length === 0" class="text-center py-5 mt-5">
                         <i class="bi bi-heart text-secondary big-text"></i>
                         <p class="text-secondary">Нет избранных автомобилей</p>
                     </div>
@@ -66,15 +70,14 @@ const refreshFavorites = () => {
 </template>
 
 <style>
+/* Стили остаются без изменений */
 .link {
     padding: 5px;
     text-decoration: none;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: transform 0.1s ease-out,
-        background-color 0.1s ease-out,
-        color 0.1s ease-out;
+    transition: transform 0.1s ease-out, background-color 0.1s ease-out, color 0.1s ease-out;
     user-select: none;
     cursor: pointer;
 }
@@ -120,7 +123,6 @@ const refreshFavorites = () => {
     position: fixed;
     right: 0;
     top: 0;
-    /* width: 40dvw; */
     height: 100dvh;
     background-color: white;
     display: flex;
