@@ -11,12 +11,12 @@ const password = ref('');
 const error = ref('');
 const isLoading = ref(false);
 
-const onRegister = async () => {
+const onLogin = async () => {
     try {
         error.value = true;
         isLoading.value = true;
 
-        await authStore.register(email.value, password.value);
+        // await authStore.register(email.value, password.value);
         await authStore.login(email.value, password.value);
 
         router.push({ name: 'user-profile' });
@@ -30,26 +30,25 @@ const onRegister = async () => {
 </script>
 <template>
     <div class="auth-page">
-        <form @submit.prevent="onRegister" class="col-10 col-md-8 col-lg-6 col-xl-5 p-3 shadow rounded-4">
+        <form @submit.prevent="onLogin" class="col-10 col-md-8 col-lg-6 col-xl-5 p-3 shadow rounded-4">
             <div class="row row-cols-1 g-3 text-center">
                 <div class="col d-flex align-items-center justify-content-center">
-                    <h2>Регистрация</h2>
+                    <h2>Авторизация</h2>
                 </div>
-                <div class="col"><input class="w-100 " v-model="email"
-                        type="email" placeholder="Email" required /></div>
-                <div class="col"><input class="w-100 "
-                        v-model="password" type="password" placeholder="Пароль" required /></div>
+                <div class="col"><input class="w-100 " v-model="email" type="email" placeholder="Email" required />
+                </div>
+                <div class="col"><input class="w-100 " v-model="password" type="password" placeholder="Пароль"
+                        required /></div>
                 <div class="col">
                     <p v-if="error" class="error-msg">{{ error }}</p>
                 </div>
-                <div class="col"><button type="submit"
-                        class="w-100 btn btn-dark mb-1" :disabled="isLoading">
-                        {{ isLoading ? 'Создание аккаунта...' : 'Создать аккаунт' }}
+                <div class="col"><button type="submit" class="w-100 btn btn-dark mb-1" :disabled="isLoading">
+                        {{ isLoading ? 'Аутентификация...' : 'Войти' }}
                     </button></div>
                 <div class="col">
                     <p class="switch-route">
-                        Уже есть аккаунт?
-                        <router-link to="/login">Войти</router-link>
+                        Впервые на DRIWA?
+                        <router-link to="/register">Регистрация</router-link>
                     </p>
                 </div>
             </div>

@@ -1,6 +1,7 @@
 import { createApp } from 'vue';
-import { router } from './router';
+import { createPinia } from 'pinia';
 import { provideFavorites } from './composables/favorite.js'
+import router from './router.js';
 import App from './App.vue';
 import api from './api/axios';
 
@@ -13,7 +14,9 @@ import { createBootstrap } from 'bootstrap-vue-next';
 import * as Components from 'bootstrap-vue-next';
 
 const app = createApp(App);
+const pinia = createPinia();
 
+app.use(pinia)
 app.use(router);
 app.use(createBootstrap());
 app.provide('$axios', api);
